@@ -92,6 +92,7 @@ export default function ManageTask() {
         setAlert(true);
     };
 
+
     const handleSave = () => {
         const editedTask = {
             id, title, description, status, dueDate
@@ -106,6 +107,8 @@ export default function ManageTask() {
         setStatus('');
         setDueDate('');
     };
+
+    
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -115,7 +118,7 @@ export default function ManageTask() {
                         setAlert(false);
                     }}
                     sx={{ mb: 2 }}
-                    style={{backgroundColor:'secondary'}}
+                    style={{backgroundColor:' #FFC107'}}
                 >
                    <Typography color="white">{alertContent}</Typography>
  

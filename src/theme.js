@@ -15,10 +15,7 @@ typography : {
 
 	fontFamily : ['Roboto']
 },
-Alert:{
-  color: "#ffffff",
-    backgroundColor: "#000000"
-}
+
 });
 
 export default theme;
