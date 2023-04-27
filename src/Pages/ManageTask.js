@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from 'prop-types';
-import { Typography, TextField, Box, Tab, Tabs, Card, Button, Grid, Container, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Typography, TextField, Box, Tab, Tabs, Card, Button, Grid, Container, ToggleButton, ToggleButtonGroup, MenuItem, Select } from "@mui/material";
 import Alert from '@mui/material/Alert';
 import { v4 as uuidv4 } from 'uuid';
 import { TaskContext } from '../contexts/ToDotask';
@@ -53,6 +53,8 @@ export default function ManageTask() {
     const [id, setid] = useState('');
     const [alert, setAlert] = useState(false);
     const [alertContent, setAlertContent] = useState('');
+    const [search, setSearch] = useState("");
+    const [sort, setSort] = useState('');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -108,7 +110,21 @@ export default function ManageTask() {
         setDueDate('');
     };
 
+
+    const handleSort = (e) => {
+        setSort(e.target.value);
+      };
     
+      const sortedTasks = tasks.sort((a, b) => {
+        if (sort === 'asc') {
+          return new Date(a.dueDate) - new Date(b.dueDate);
+        } else if (sort === 'desc') {
+          return new Date(b.dueDate) - new Date(a.dueDate);
+        } else {
+          return 0;
+        }
+      });
+
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -118,10 +134,10 @@ export default function ManageTask() {
                         setAlert(false);
                     }}
                     sx={{ mb: 2 }}
-                    style={{backgroundColor:' #FFC107'}}
+                    style={{ backgroundColor: ' #FFC107' }}
                 >
-                   <Typography color="white">{alertContent}</Typography>
- 
+                    <Typography color="white">{alertContent}</Typography>
+
                 </Alert> : <></>}
                 <Box sx={{ width: '100%' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -177,7 +193,7 @@ export default function ManageTask() {
                                                     onChange={(e) => setStatus(e.target.value)}
                                                     aria-label="Platform"
                                                 >
-                                                    <ToggleButton value=" not completed">Not Completed</ToggleButton>
+                                                    <ToggleButton value="not completed">Not Completed</ToggleButton>
                                                     <ToggleButton value="complete">Completed</ToggleButton>
 
                                                 </ToggleButtonGroup>
@@ -240,7 +256,7 @@ export default function ManageTask() {
                                                             onChange={(e) => setStatus(e.target.value)}
                                                             aria-label="Platform"
                                                         >
-                                                            <ToggleButton value=" not completed">Not Completed</ToggleButton>
+                                                            <ToggleButton value="not completed">Not Completed</ToggleButton>
                                                             <ToggleButton value="complete">Completed</ToggleButton>
 
                                                         </ToggleButtonGroup>
@@ -285,7 +301,32 @@ export default function ManageTask() {
                             </div>
                         ) : (
                             <div>
-                                {tasks.map(tasks => {
+                                <Select onChange={(e) => {
+                                    setSearch(e.target.value);
+                                }}
+                                    value={search}
+                                >
+                                    <MenuItem value=''>All</MenuItem>
+                                    <MenuItem value="not completed">Not Completed</MenuItem>
+                                    <MenuItem value="complete" >Complete</MenuItem>
+                                </Select>
+                                <Select onChange={handleSort} value={sort}>
+                                    <MenuItem value=''>Sort by Due Date</MenuItem>
+                                    <MenuItem value='asc'>Due Date (Ascending)</MenuItem>
+                                    <MenuItem value='desc'>Due Date (Descending)</MenuItem>
+                                </Select>
+                                {sortedTasks.filter((tasks, b) => {
+
+                                    if (search === "") {
+                                        return tasks
+                                    }
+                                    else if (search === "complete") {
+                                        return tasks.status === "complete";
+                                    } else if (search === "not completed") {
+                                        return tasks.status === "not completed";
+                                    }
+                                    return null
+                                }).map(tasks => {
                                     return (
                                         <div key={tasks.id}>
                                             <Container maxWidth="lg">
