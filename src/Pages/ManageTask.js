@@ -167,7 +167,8 @@ export default function ManageTask() {
                                                     multiline
                                                     value={title}
                                                     maxRows={1}
-                                                    color="primary"
+                                                    color="secondary"
+
                                                 />
                                             </div>
 
@@ -181,13 +182,13 @@ export default function ManageTask() {
                                                     required
                                                     value={description}
                                                     maxRows={5}
-                                                    color="primary"
+                                                    color="secondary"
                                                 />
                                             </div>
 
                                             <div className="bottom">
                                                 <ToggleButtonGroup
-                                                    color="primary"
+                                                    color="secondary"
                                                     value={status}
                                                     exclusive
                                                     onChange={(e) => setStatus(e.target.value)}
@@ -208,6 +209,8 @@ export default function ManageTask() {
                                                     value={dueDate}
                                                     onChange={(e) => setDueDate(e.target.value)}
                                                     fullWidth
+                                                    color="secondary"
+
                                                 />
                                             </div>
 
@@ -242,16 +245,16 @@ export default function ManageTask() {
                                                             multiline
                                                             value={title}
                                                             maxRows={1}
-                                                            color="primary"
-                                                        />
+                                                            color="secondary"
+                                                            />
                                                     </div>
 
                                                 </Grid>
                                                 <Grid item xs={6}>
                                                     <div className="bottom">
                                                         <ToggleButtonGroup
-                                                            color="primary"
-                                                            value={status}
+                                                    color="secondary"
+                                                    value={status}
                                                             exclusive
                                                             onChange={(e) => setStatus(e.target.value)}
                                                             aria-label="Platform"
@@ -273,8 +276,8 @@ export default function ManageTask() {
                                                             required
                                                             value={description}
                                                             maxRows={5}
-                                                            color="primary"
-                                                        />
+                                                            color="secondary"
+                                                            />
                                                     </div>
                                                 </Grid>
                                                 <Grid item xs={6}>
@@ -286,6 +289,8 @@ export default function ManageTask() {
                                                             value={dueDate}
                                                             fullWidth
                                                             onChange={(e) => setDueDate(e.target.value)}
+                                                            color="secondary"
+
                                                         />
                                                     </div>
                                                 </Grid>
