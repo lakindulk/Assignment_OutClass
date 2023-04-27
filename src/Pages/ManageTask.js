@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from 'prop-types';
-import { Typography, TextField, Box, Tab, Tabs, Card, Button, Select, MenuItem, InputLabel, Grid } from "@mui/material";
+import { Typography, TextField, Box, Tab, Tabs, Card, Button, Grid, Container, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import Alert from '@mui/material/Alert';
 import { v4 as uuidv4 } from 'uuid';
 import { TaskContext } from '../contexts/ToDotask';
@@ -68,7 +68,7 @@ export default function ManageTask() {
         };
         addTask(newTask);
         console.log(tasks);
-        setAlertContent('New Task Added  |Click Me To Close|');
+        setAlertContent('New Task Added  | Click Me To Close |');
         setAlert(true);
         setTitle('');
         setDescription('');
@@ -88,7 +88,7 @@ export default function ManageTask() {
 
     const deleteTasks = (id) => {
         deleteTask(id);
-        setAlertContent('Task Removed  |Click Me To Close|');
+        setAlertContent('Task Removed  | Click Me To Close |');
         setAlert(true);
     };
 
@@ -98,7 +98,7 @@ export default function ManageTask() {
         }
         editTask(editedTask);
         setIsEditing(false);
-        setAlertContent('Task Edited Successfully  |Click Me To Close|');
+        setAlertContent('Task Edited Successfully  | Click Me To Close |');
         setAlert(true);
         setid('');
         setTitle('');
@@ -115,8 +115,10 @@ export default function ManageTask() {
                         setAlert(false);
                     }}
                     sx={{ mb: 2 }}
+                    style={{backgroundColor:'secondary'}}
                 >
-                    {alertContent}
+                   <Typography color="white">{alertContent}</Typography>
+ 
                 </Alert> : <></>}
                 <Box sx={{ width: '100%' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -129,68 +131,72 @@ export default function ManageTask() {
                         <div className="bottom">
                             <Typography variant="h4" color='primary'> Task Management</Typography>
                         </div>
-                        <div className="mainCard">
-                            <Card sx={{ maxWidth: 1300 }} >
-                                <div className="cardstyle">
-                                    <form onSubmit={handleSubmit}>
+                        <div >
+                            <Container maxWidth="lm">
 
-                                        <div className="bottom">
-                                            <TextField
-                                                id="outlined-multiline-flexible"
-                                                label="Title"
-                                                onChange={(e) => setTitle(e.target.value)}
-                                                fullWidth
-                                                required
-                                                multiline
-                                                value={title}
-                                                maxRows={1}
-                                                color="primary"
-                                            />
-                                        </div>
+                                <Card sx={{ maxWidth: 1300 }} >
+                                    <div className="cardstyle">
+                                        <form onSubmit={handleSubmit}>
 
-                                        <div className="bottom">
-                                            <TextField
-                                                id="outlined-multiline-flexible"
-                                                label="description"
-                                                onChange={(e) => setDescription(e.target.value)}
-                                                multiline
-                                                fullWidth
-                                                required
-                                                value={description}
-                                                maxRows={5}
-                                                color="primary"
-                                            />
-                                        </div>
-                                        <div className="bottom">
+                                            <div className="bottom">
+                                                <TextField
+                                                    id="outlined-multiline-flexible"
+                                                    label="Title"
+                                                    onChange={(e) => setTitle(e.target.value)}
+                                                    fullWidth
+                                                    required
+                                                    multiline
+                                                    value={title}
+                                                    maxRows={1}
+                                                    color="primary"
+                                                />
+                                            </div>
 
-                                            <Select
-                                                id="status"
-                                                value={status}
-                                                onChange={(e) => setStatus(e.target.value)}
-                                                fullWidth
-                                            >
-                                                <InputLabel > Status</InputLabel>
+                                            <div className="bottom">
+                                                <TextField
+                                                    id="outlined-multiline-flexible"
+                                                    label="description"
+                                                    onChange={(e) => setDescription(e.target.value)}
+                                                    multiline
+                                                    fullWidth
+                                                    required
+                                                    value={description}
+                                                    maxRows={5}
+                                                    color="primary"
+                                                />
+                                            </div>
 
-                                                <MenuItem value="not completed">Not Completed</MenuItem >
-                                                <MenuItem value="completed">Completed</MenuItem >
-                                            </Select >
-                                        </div>
+                                            <div className="bottom">
+                                                <ToggleButtonGroup
+                                                    color="primary"
+                                                    value={status}
+                                                    exclusive
+                                                    onChange={(e) => setStatus(e.target.value)}
+                                                    aria-label="Platform"
+                                                >
+                                                    <ToggleButton value=" not completed">Not Completed</ToggleButton>
+                                                    <ToggleButton value="complete">Completed</ToggleButton>
 
-                                        <div className="bottom">
+                                                </ToggleButtonGroup>
+                                            </div>
 
-                                            <TextField
-                                                type="date"
-                                                id="dueDate"
-                                                value={dueDate}
-                                                onChange={(e) => setDueDate(e.target.value)}
-                                                fullWidth
-                                            />
-                                        </div>
 
-                                        <Button variant="contained" fullWidth type="submit">Add Task</Button>
-                                    </form>
-                                </div>
-                            </Card>
+                                            <div className="bottom">
+
+                                                <TextField
+                                                    type="date"
+                                                    id="dueDate"
+                                                    value={dueDate}
+                                                    onChange={(e) => setDueDate(e.target.value)}
+                                                    fullWidth
+                                                />
+                                            </div>
+
+                                            <Button variant="contained" fullWidth type="submit">Add Task</Button>
+                                        </form>
+                                    </div>
+                                </Card>
+                            </Container>
                         </div>
 
                     </TabPanel>
@@ -199,109 +205,118 @@ export default function ManageTask() {
                             <Typography variant="h4" color='primary'> Manage Tasks</Typography>
                         </div>
                         {isEditing ? (
-                            <div className="mainCard">
-                                <Card >
-                                    <div className="cardstyle">
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={6}>
+                            <div >
+                                <Container maxWidth="md">
 
-                                                <div className="bottom">
-                                                    <TextField
-                                                        id="outlined-multiline-flexible"
-                                                        label="Title"
-                                                        onChange={(e) => setTitle(e.target.value)}
-                                                        fullWidth
-                                                        required
-                                                        multiline
-                                                        value={title}
-                                                        maxRows={1}
-                                                        color="primary"
-                                                    />
-                                                </div>
+                                    <Card >
+                                        <div className="cardstyle">
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={6}>
 
+                                                    <div className="bottom">
+                                                        <TextField
+                                                            id="outlined-multiline-flexible"
+                                                            label="Title"
+                                                            onChange={(e) => setTitle(e.target.value)}
+                                                            fullWidth
+                                                            required
+                                                            multiline
+                                                            value={title}
+                                                            maxRows={1}
+                                                            color="primary"
+                                                        />
+                                                    </div>
+
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <div className="bottom">
+                                                        <ToggleButtonGroup
+                                                            color="primary"
+                                                            value={status}
+                                                            exclusive
+                                                            onChange={(e) => setStatus(e.target.value)}
+                                                            aria-label="Platform"
+                                                        >
+                                                            <ToggleButton value=" not completed">Not Completed</ToggleButton>
+                                                            <ToggleButton value="complete">Completed</ToggleButton>
+
+                                                        </ToggleButtonGroup>
+                                                    </div>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <div className="bottom">
+                                                        <TextField
+                                                            id="outlined-multiline-flexible"
+                                                            label="description"
+                                                            onChange={(e) => setDescription(e.target.value)}
+                                                            multiline
+                                                            fullWidth
+                                                            required
+                                                            value={description}
+                                                            maxRows={5}
+                                                            color="primary"
+                                                        />
+                                                    </div>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <div className="bottom">
+
+                                                        <TextField
+                                                            type="date"
+                                                            id="dueDate"
+                                                            value={dueDate}
+                                                            fullWidth
+                                                            onChange={(e) => setDueDate(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={6}>
-                                                <div className="bottom">
-
-                                                    <Select
-                                                        id="status"
-                                                        value={status}
-                                                        onChange={(e) => setStatus(e.target.value)}
-                                                        fullWidth
-                                                    >
-                                                        <InputLabel > Status</InputLabel>
-
-                                                        <MenuItem value="not completed">Not Completed</MenuItem >
-                                                        <MenuItem value="completed">Completed</MenuItem >
-                                                    </Select >
-                                                </div>
-                                            </Grid>
-                                            <Grid item xs={6}>
-                                                <div className="bottom">
-                                                    <TextField
-                                                        id="outlined-multiline-flexible"
-                                                        label="description"
-                                                        onChange={(e) => setDescription(e.target.value)}
-                                                        multiline
-                                                        fullWidth
-                                                        required
-                                                        value={description}
-                                                        maxRows={5}
-                                                        color="primary"
-                                                    />
-                                                </div>
-                                            </Grid>
-                                            <Grid item xs={6}>
-                                                <div className="bottom">
-
-                                                    <TextField
-                                                        type="date"
-                                                        id="dueDate"
-                                                        value={dueDate}
-                                                        fullWidth
-                                                        onChange={(e) => setDueDate(e.target.value)}
-                                                    />
-                                                </div>
-                                            </Grid>
-                                        </Grid>
 
 
-                                        <Button variant="contained" fullWidth onClick={handleSave}>Save</Button>
-                                    </div>
+                                            <Button variant="contained" fullWidth onClick={handleSave}>Save</Button>
+                                        </div>
 
 
-                                </Card>
-
+                                    </Card>
+                                </Container>
                             </div>
                         ) : (
                             <div>
                                 {tasks.map(tasks => {
                                     return (
-                                        <div className="mainCardnew" key={tasks.id}>
-                                            <Card
-                                                sx={{ maxWidth: 700 }}
+                                        <div key={tasks.id}>
+                                            <Container maxWidth="lg">
+                                                <div className="mainCardnew">
+                                                    <Card
+                                                        sx={{ maxWidth: 700 }}
 
-                                            >
-
-
-                                                <div className="cardsdata" >
-                                                    <Typography variant="h6" color='primary'>Title: {tasks.title}</Typography>
-                                                    <Typography variant="h6" color='primary'>Description: {tasks.description}</Typography>
-                                                    <Typography variant="h6" color='primary'>Status: {tasks.status}</Typography>
-                                                    <Typography variant="h6" color='primary'>Due Date: {tasks.dueDate}</Typography>
+                                                    >
 
 
-                                                    <div className="cardsbutton">
-                                                        <Button variant="contained" color="secondary"
+                                                        <div className="cardsdata" >
+                                                            <Typography variant="h6" color='primary'>Title: {tasks.title}</Typography>
+                                                            <Typography variant="h6" color='primary'>Description: {tasks.description}</Typography>
+                                                            <Typography variant="h6" color='primary'>Status: {tasks.status}</Typography>
+                                                            <Typography variant="h6" color='primary'>Due Date: {tasks.dueDate}</Typography>
 
-                                                            onClick={() => deleteTasks(tasks.id)}
-                                                        >delete</Button> {' '}
-                                                        <Button variant="contained"
-                                                            onClick={() => handleEdit(tasks.id, tasks.title, tasks.description, tasks.status, tasks.dueDate)}>Edit</Button>
-                                                    </div>
 
+                                                            <Container >
+                                                                <div className="cardsbutton">
+                                                                    <Button variant="contained" color="secondary"
+
+                                                                        onClick={() => deleteTasks(tasks.id)}
+                                                                    >delete</Button> {' '}
+                                                                    <Button variant="contained"
+                                                                        onClick={() => handleEdit(tasks.id, tasks.title, tasks.description, tasks.status, tasks.dueDate)}>Edit</Button>
+                                                                </div>
+
+                                                            </Container>
+
+                                                        </div>
+                                                    </Card>
                                                 </div>
-                                            </Card>
+
+                                            </Container>
                                         </div>
                                     );
                                 })}
